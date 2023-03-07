@@ -104,7 +104,7 @@ while test $# -gt 0; do
     shift
 done
 
-MACHINE_TYPE=${MACHINE_TYPE:-"e2-standard-2"}
+# MACHINE_TYPE=${MACHINE_TYPE:-"e2-standard-2"}
 
 [ -z $SERVER_ACCOUNT   ] && die "Missing argument --server-account"
 [ -z $PROJECT          ] && die "Missing argument --project"
@@ -139,7 +139,7 @@ gcloud compute instances create $INSTANCE_NAME \
        --image-family debian-11 \
        --image-project debian-cloud \
        --zone $ZONE \
-       --machine-type=$MACHINE_TYPE \
+       [ ! -z $MACHINE_TYPE ] && --machine-type=$MACHINE_TYPE \
        --service-account=$SERVER_ACCOUNT --scopes=cloud-platform \
        --network=$NETWORK --subnet=$SUBNET \
        --metadata=cromwell-version=71 \
